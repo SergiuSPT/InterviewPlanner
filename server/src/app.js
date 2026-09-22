@@ -3,6 +3,7 @@ import express from "express";
 import { env } from "./config/env.js";
 import { database } from "./config/database.js";
 import { sessionRouter } from "./routes/sessionRoutes.js";
+import { participantRouter } from "./routes/participantRoutes.js";
 
 export const app = express();
 
@@ -40,6 +41,7 @@ app.get("/api/health", async (request, response) => {
 });
 
 app.use("/api/sessions", sessionRouter);
+app.use("/api/participants", participantRouter);
 
 app.use((request, response) => {
   response.status(404).json({

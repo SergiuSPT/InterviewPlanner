@@ -131,6 +131,9 @@ function SessionsPage() {
             {session.notes && <p className="session-notes">{session.notes}</p>}
 
             <div className="session-card-actions">
+              <Link className="session-button session-button-secondary" to={`/sessions/${session.id}/participants`}>
+                Participants
+              </Link>
               <Link className="session-button session-button-secondary" to={`/sessions/${session.id}/edit`}>
                 Edit
               </Link>

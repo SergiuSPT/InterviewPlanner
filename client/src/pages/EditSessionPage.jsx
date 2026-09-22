@@ -129,6 +129,7 @@ function EditSessionPage() {
         submitLabel="Save changes"
         pendingLabel="Saving..."
       />
+      <Link className="inline-link" to={`/sessions/${id}/participants`}>Manage session participants</Link>
     </main>
   );
 }

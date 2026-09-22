@@ -16,7 +16,7 @@ export async function createSession(sessionData) {
 }
 
 export async function updateSession(sessionId, sessionData) {
-  const response = await api.put(`/sessions/${sessionId}`, sessionData);
+  const response = await api.patch(`/sessions/${sessionId}`, sessionData);
   return response.data.session;
 }
 

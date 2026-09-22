@@ -5,6 +5,21 @@
 }
 
 .session-page-form { max-width: 840px; }
+.app-nav { display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; max-width: 1120px; margin: 0 auto; padding: 22px 28px; border-bottom: 1px solid #e3e5ed; }
+.app-brand { font-weight: 750; color: #252a40; }
+.app-nav-links { display: flex; gap: 8px; }
+.app-nav-links a { padding: 10px 16px; border-radius: 8px; text-decoration: none; font-size: 0.875rem; font-weight: 650; color: #626b7e; }
+.app-nav-links a:hover, .app-nav-links a.active { background: #eee8f8; color: #6441be; }
+.participant-email { color: #626b7e; font-size: 0.875rem; margin-top: 6px; overflow-wrap: anywhere; }
+.profile-summary { margin-bottom: 32px; }
+.section-heading { margin: 32px 0 20px; }
+.section-heading h2 { font-size: 1.25rem; }
+.section-heading p, .muted-text { color: #626b7e; font-size: 0.875rem; }
+.inline-link { display: inline-block; margin-top: 20px; font-weight: 600; font-size: 0.875rem; }
+.session-notice { padding: 14px 18px; margin-bottom: 24px; border: 1px solid #b8dbc7; border-radius: 10px; color: #226a4c; background: #e8f5ec; }
+.session-button-danger { color: #a12f40; border-color: #efc9ce; background: #fff; }
+.session-button-danger:hover:not(:disabled) { background: #fff1f2; }
+.session-page-heading h1 { overflow-wrap: anywhere; }
 .session-page-heading { margin-bottom: 32px; }
 .session-page-heading h1 {
   margin: 8px 0 12px;
@@ -45,14 +60,14 @@
 .back-link:hover { text-decoration: underline; }
 
 .session-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
-.session-card, .session-form, .session-state { background: #fff; border: 1px solid #e3e5ed; border-radius: 16px; box-shadow: 0 4px 18px #20243805; }
+.session-card, .session-form, .session-state { background: #d3bcff; border: 1px solid #e3e5ed; border-radius: 16px; box-shadow: 0 4px 18px #20243805; }
 .session-card { display: flex; flex-direction: column; min-width: 0; padding: 28px; }
 .session-card h2 { color: #252a40; font-size: 1.2rem; font-weight: 650; line-height: 1.4; overflow-wrap: anywhere; }
 .session-details { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px 16px; margin: 24px 0; }
 .session-details dt { margin-bottom: 4px; color: #747c8d; font-size: 0.75rem; }
 .session-details dd { margin: 0; font-size: 0.875rem; font-weight: 550; text-transform: capitalize; overflow-wrap: anywhere; }
 .session-status { display: inline-block; padding: 3px 10px; border-radius: 6px; color: #5f48a0; background: #f0ebfa; font-size: 0.75rem; }
-.session-status-completed { color: #226a4c; background: #e8f5ec; }
+.session-status-completed { color: #226a4c; background: #31f76c; }
 .session-status-in_progress { color: #8c5a11; background: #fff3d9; }
 .session-status-cancelled { color: #8b4250; background: #fcecef; }
 .session-schedule { margin-bottom: 16px; color: #626b7e; font-size: 0.8rem; }
