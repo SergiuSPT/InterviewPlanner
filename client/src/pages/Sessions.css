@@ -5,6 +5,16 @@
 }
 
 .session-page-form { max-width: 840px; }
+.session-feedback { margin: 0 0 24px; padding: 20px; border: 1px solid #e7e0f2; border-radius: 10px; background: #faf8fd; }
+.session-feedback h3 { margin: 0 0 12px; color: #5f48a0; font-size: 1rem; }
+.feedback-entry + .feedback-entry { margin-top: 20px; padding-top: 20px; border-top: 1px solid #e7e0f2; }
+.feedback-summary { margin: 0 0 16px; }
+.feedback-summary dd { text-transform: none; }
+.feedback-text + .feedback-text { margin-top: 16px; }
+.feedback-text h4 { margin: 0 0 4px; font-size: 0.8rem; font-weight: 650; }
+.feedback-text p { color: #626b7e; font-size: 0.875rem; white-space: pre-wrap; overflow-wrap: anywhere; }
+.feedback-fields { border: 0; margin: 0; padding: 0; min-width: 0; }
+.visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
 .app-nav { display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; max-width: 1120px; margin: 0 auto; padding: 22px 28px; border-bottom: 1px solid #e3e5ed; }
 .app-brand { font-weight: 750; color: #252a40; }
 .app-nav-links { display: flex; gap: 8px; }

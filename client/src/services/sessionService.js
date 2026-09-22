@@ -20,7 +20,7 @@ export async function updateSession(sessionId, sessionData) {
   return response.data.session;
 }
 
-export async function completeSession(sessionId) {
-  const response = await api.patch(`/sessions/${sessionId}/complete`,);
+export async function completeSession(sessionId, feedback) {
+  const response = await api.patch(`/sessions/${sessionId}/complete`, feedback);
   return response.data.session;
 }

@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { getSessions, completeSession } from "../services/sessionService";
+import { getSessions } from "../services/sessionService";
 
 function SessionsPage() {
   const [sessions, setSessions] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
-  const [updatingSessionId, setUpdatingSessionId] = useState(null);
 
   useEffect(() => {
     async function loadSessions() {
@@ -26,38 +25,6 @@ function SessionsPage() {
 
   if (isLoading) {
     return <main className="session-page"><p className="session-state" role="status">Loading sessions...</p></main>;
-  }
-
-  async function handleComplete(sessionId) {
-    const shouldComplete = window.confirm(
-      "Mark this interview session as completed?",
-    );
-
-    if (!shouldComplete) {
-      return;
-    }
-
-    try {
-      setUpdatingSessionId(sessionId);
-      setError("");
-
-      const updatedSession = await completeSession(sessionId);
-
-      setSessions((currentSessions) =>
-        currentSessions.map((session) =>
-          session.id === sessionId ? updatedSession : session,
-        ),
-      );
-    } catch (requestError) {
-      console.error(requestError);
-
-      setError(
-        requestError.response?.data?.message ||
-          "Could not complete the interview session.",
-      );
-    } finally {
-      setUpdatingSessionId(null);
-    }
   }
 
   return (
@@ -139,16 +106,12 @@ function SessionsPage() {
               </Link>
 
               {session.status !== "completed" && (
-                <button
+                <Link
                   className="session-button session-button-primary"
-                  type="button"
-                  disabled={updatingSessionId === session.id}
-                  onClick={() => handleComplete(session.id)}
+                  to={`/sessions/${session.id}/complete`}
                 >
-                  {updatingSessionId === session.id
-                    ? "Completing..."
-                    : "Mark completed"}
-                </button>
+                  Mark completed
+                </Link>
               )}
             </div>
           </article>

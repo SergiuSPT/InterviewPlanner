@@ -1,6 +1,7 @@
 import { Link, useParams } from "react-router-dom";
 import usePageData from "../hooks/usePageData";
 import { getParticipantById, getParticipantHistory } from "../services/participantService";
+import SessionFeedback from "../components/SessionFeedback";
 
 async function loadProfile(id) {
   const [participant, sessions] = await Promise.all([getParticipantById(id), getParticipantHistory(id)]);
@@ -51,6 +52,7 @@ export default function ParticipantDetailsPage() {
             </dl>
             {session.scheduledAt && <p className="session-schedule">Scheduled for: {new Date(session.scheduledAt).toLocaleString()}</p>}
             {session.completedAt && <p className="session-schedule">Completed on: {new Date(session.completedAt).toLocaleString()}</p>}
+            {session.participantRole === "candidate" && <SessionFeedback feedback={session.feedback} />}
             <div className="session-card-actions">
               <Link className="session-button session-button-secondary" to={`/sessions/${session.id}/participants`}>View session participants</Link>
               <Link className="session-button session-button-secondary" to={`/sessions/${session.id}/edit`}>Edit session</Link>

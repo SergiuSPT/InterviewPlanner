@@ -215,7 +215,29 @@ export async function getParticipantHistory(
           interview_sessions.scheduled_at AS "scheduledAt",
           interview_sessions.duration_minutes AS "durationMinutes",
           interview_sessions.completed_at AS "completedAt",
-          session_participants.participant_role AS "participantRole"
+          session_participants.participant_role AS "participantRole",
+          COALESCE((
+            SELECT jsonb_agg(
+              jsonb_build_object(
+                'id', feedback.id,
+                'candidateId', feedback.candidate_id,
+                'reviewerId', feedback.reviewer_id,
+                'reviewerName', reviewer.full_name,
+                'overallScore', feedback.overall_score,
+                'strengths', feedback.strengths,
+                'improvementAreas', feedback.improvement_areas,
+                'outcome', feedback.outcome,
+                'recommendation', feedback.recommendation,
+                'additionalComments', feedback.additional_comments,
+                'createdAt', feedback.created_at
+              ) ORDER BY feedback.created_at DESC, feedback.id
+            )
+            FROM interview_feedback AS feedback
+            LEFT JOIN participants AS reviewer
+              ON reviewer.id = feedback.reviewer_id
+            WHERE feedback.interview_session_id = interview_sessions.id
+              AND feedback.candidate_id = $1
+          ), '[]'::jsonb) AS feedback
         FROM session_participants
         INNER JOIN interview_sessions
           ON interview_sessions.id =

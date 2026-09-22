@@ -7,6 +7,7 @@ import ParticipantsPage from "./pages/ParticipantsPage";
 import CreateParticipantPage from "./pages/CreateParticipantPage";
 import ParticipantDetailsPage from "./pages/ParticipantDetailsPage";
 import SessionParticipantsPage from "./pages/SessionParticipantsPage";
+import CompleteSessionPage from "./pages/CompleteSessionPage";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
       <Route path="/sessions" element={<SessionsPage />} />
       <Route path="/sessions/new" element={<CreateSessionPage />} />
       <Route path="/sessions/:id/edit" element={<EditSessionPage />} />
+      <Route path="/sessions/:id/complete" element={<CompleteSessionPage />} />
       <Route path="/sessions/:id/participants" element={<SessionParticipantsPage />} />
       <Route path="/participants" element={<ParticipantsPage />} />
       <Route path="/participants/new" element={<CreateParticipantPage />} />
