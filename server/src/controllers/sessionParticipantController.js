@@ -4,6 +4,8 @@ import { sessionIdSchema } from "../schemas/sessionSchema.js";
 import { assignParticipantSchema } from "../schemas/sessionParticipantSchema.js";
 
 export async function assignParticipant(request, response, next) {
+  let client;
+  let transactionOpen = false;
   try {
     const sessionIdValidation = sessionIdSchema.safeParse(
       request.params.id,
@@ -27,10 +29,133 @@ export async function assignParticipant(request, response, next) {
         errors: bodyValidation.error.flatten().fieldErrors,
       });
     }
-
     const { participantId, participantRole } = bodyValidation.data;
 
-    const result = await database.query(
+    client = await database.connect();
+    await client.query("BEGIN");
+    transactionOpen = true;
+
+    // Serialize assignments for this person, even when requests target different sessions.
+    const participantResult = await client.query(
+      "SELECT id FROM participants WHERE id = $1 FOR UPDATE",
+      [participantId],
+    );
+    if (participantResult.rows.length === 0) {
+      await client.query("ROLLBACK");
+      transactionOpen = false;
+      return response.status(404).json({ success: false, message: "Participant not found" });
+    }
+
+    const targetSessionResult = await client.query(
+      `
+        SELECT
+          id,
+          title,
+          scheduled_at AS "scheduledAt",
+          COALESCE(duration_minutes, 60) AS "durationMinutes",
+          status
+        FROM interview_sessions
+        WHERE id = $1
+        FOR SHARE
+      `,
+      [request.params.id],
+    );
+
+    if (targetSessionResult.rows.length === 0) {
+      await client.query("ROLLBACK");
+      transactionOpen = false;
+      return response.status(404).json({
+        success: false,
+        message: "Interview session not found",
+      });
+    }
+
+    const targetSession = targetSessionResult.rows[0];
+
+    const existingAssignment = await client.query(
+      "SELECT id FROM session_participants WHERE interview_session_id = $1 AND participant_id = $2",
+      [request.params.id, participantId],
+    );
+    if (existingAssignment.rows.length > 0) {
+      await client.query("ROLLBACK");
+      transactionOpen = false;
+      return response.status(409).json({
+        success: false,
+        message: "This participant is already assigned to the session",
+      });
+    }
+
+    if (targetSession.scheduledAt && ["planned", "in_progress"].includes(targetSession.status)) {
+      const conflictResult = await client.query(
+        `
+          SELECT
+            existing_session.id,
+            existing_session.title,
+            existing_session.scheduled_at AS "scheduledAt",
+            COALESCE(
+              existing_session.duration_minutes,
+              60
+            ) AS "durationMinutes",
+            existing_session.status,
+            session_participants.participant_role AS "participantRole"
+
+          FROM session_participants
+
+          INNER JOIN interview_sessions AS existing_session
+            ON existing_session.id =
+              session_participants.interview_session_id
+
+          WHERE session_participants.participant_id = $1
+
+            AND existing_session.id <> $2
+
+            AND existing_session.status IN (
+              'planned',
+              'in_progress'
+            )
+
+            AND existing_session.scheduled_at IS NOT NULL
+
+            AND existing_session.scheduled_at <
+              $3::timestamptz +
+              make_interval(mins => $4::integer)
+
+            AND existing_session.scheduled_at +
+              make_interval(
+                mins => COALESCE(
+                  existing_session.duration_minutes,
+                  60
+                )
+              ) > $3::timestamptz
+
+          ORDER BY existing_session.scheduled_at ASC
+          LIMIT 1
+        `,
+        [
+          participantId,
+          request.params.id,
+          targetSession.scheduledAt,
+          targetSession.durationMinutes,
+        ],
+      );
+
+      if (conflictResult.rows.length > 0) {
+        const conflictingSession = conflictResult.rows[0];
+
+        await client.query("ROLLBACK");
+        transactionOpen = false;
+        return response.status(409).json({
+          success: false,
+          code: "SCHEDULE_CONFLICT",
+          message:
+            "This participant already has another interview during this time.",
+          conflictingSession,
+        });
+      }
+    }
+
+
+    const result = await client.query(
       `
         INSERT INTO session_participants (
           interview_session_id,
@@ -52,12 +177,21 @@ export async function assignParticipant(request, response, next) {
       ],
     );
 
+    await client.query("COMMIT");
+    transactionOpen = false;
     return response.status(201).json({
       success: true,
       message: "Participant assigned to session",
       assignment: result.rows[0],
     });
   } catch (error) {
+    if (transactionOpen) {
+      try {
+        await client.query("ROLLBACK");
+      } catch (rollbackError) {
+        return next(rollbackError);
+      }
+    }
     if (error.code === "23505") {
       return response.status(409).json({
         success: false,
@@ -73,6 +207,8 @@ export async function assignParticipant(request, response, next) {
     }
 
     return next(error);
+  } finally {
+    client?.release();
   }
 }
 

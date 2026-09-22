@@ -63,6 +63,11 @@ function ParticipantManager({ session, participants, assigned: initialAssigned }
       <p className="session-eyebrow">PRACTICE TOGETHER</p>
       <h1>{session.title}</h1>
       <p>Manage the candidates and interviewers for this session.</p>
+      <p className="session-schedule">
+        {session.scheduledAt
+          ? `Scheduled for: ${new Date(session.scheduledAt).toLocaleString()} (${session.durationMinutes ?? 60} minutes${session.durationMinutes == null ? "; default duration" : ""}).`
+          : "No scheduled time. Availability cannot be checked until this session is scheduled."}
+      </p>
     </header>
     <RequestError error={error} />
     <p className={notice ? "session-notice" : ""} role="status">{notice}</p>
@@ -72,7 +77,7 @@ function ParticipantManager({ session, participants, assigned: initialAssigned }
         <div className="form-grid">
           <div className="form-field">
             <label htmlFor="participantId">Participant</label>
-            <select id="participantId" value={participantId} onChange={(event) => setParticipantId(event.target.value)} required disabled={!!pending}>
+            <select id="participantId" value={participantId} onChange={(event) => { setParticipantId(event.target.value); setError(null); setNotice(""); }} required disabled={!!pending}>
               <option value="">Select a participant</option>
               {available.map((participant) => <option key={participant.id} value={participant.id}>{participant.fullName}{participant.email ? ` (${participant.email})` : ""}</option>)}
             </select>

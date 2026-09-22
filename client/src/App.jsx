@@ -8,6 +8,7 @@ import CreateParticipantPage from "./pages/CreateParticipantPage";
 import ParticipantDetailsPage from "./pages/ParticipantDetailsPage";
 import SessionParticipantsPage from "./pages/SessionParticipantsPage";
 import CompleteSessionPage from "./pages/CompleteSessionPage";
+import SearchPage from "./pages/SearchPage";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
       <div className="app-nav-links">
         <NavLink to="/sessions">Sessions</NavLink>
         <NavLink to="/participants">Participants</NavLink>
+        <NavLink to="/search">Search</NavLink>
       </div>
     </nav>
     <Routes>
@@ -26,6 +28,7 @@ function App() {
       <Route path="/sessions/:id/edit" element={<EditSessionPage />} />
       <Route path="/sessions/:id/complete" element={<CompleteSessionPage />} />
       <Route path="/sessions/:id/participants" element={<SessionParticipantsPage />} />
+      <Route path="/search" element={<SearchPage />} />
       <Route path="/participants" element={<ParticipantsPage />} />
       <Route path="/participants/new" element={<CreateParticipantPage />} />
       <Route path="/participants/:id" element={<ParticipantDetailsPage />} />

@@ -25,8 +25,8 @@ export async function getSessionParticipants(sessionId) {
   return response.data.participants;
 }
 
-export async function assignParticipant(sessionId, data) {
-  const response = await api.post(`/sessions/${sessionId}/participants`, data);
+export async function assignParticipant(sessionId, participantData) {
+  const response = await api.post(`/sessions/${sessionId}/participants`, participantData);
   return response.data.assignment;
 }
 

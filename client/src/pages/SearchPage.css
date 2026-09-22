@@ -1,0 +1,150 @@
+.search-panel {
+  margin-bottom: 24px;
+}
+
+.search-controls {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(200px, 240px) auto;
+  align-items: end;
+  gap: 16px;
+}
+
+.search-controls > .session-button {
+  min-height: 46px;
+  padding-inline: 28px;
+}
+
+.search-hint {
+  margin-top: 14px;
+  color: #535d72;
+  font-size: 0.8rem;
+}
+
+.search-status {
+  color: #626b7e;
+  font-size: 0.875rem;
+}
+
+.search-status:empty {
+  display: none;
+}
+
+.search-status strong {
+  color: #6441be;
+}
+
+.search-result-section {
+  margin-top: 32px;
+}
+
+.search-section-heading {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.search-section-heading h2 {
+  font-size: 1.25rem;
+  font-weight: 650;
+}
+
+.search-count {
+  padding: 2px 10px;
+  border-radius: 20px;
+  background: #eee8f8;
+  color: #6441be;
+  font-size: 0.8rem;
+  font-weight: 650;
+}
+
+.search-result-card h3 {
+  margin: 0;
+  color: #252a40;
+  font-size: 1.125rem;
+  line-height: 1.4;
+  font-weight: 650;
+  overflow-wrap: anywhere;
+}
+
+.search-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 14px 0 20px;
+  text-transform: capitalize;
+}
+
+.search-result-card .session-card-actions {
+  padding-top: 18px;
+}
+
+.search-participant-role, .search-candidate {
+  margin-top: 8px;
+  color: #535d72;
+  font-size: 0.875rem;
+  overflow-wrap: anywhere;
+}
+
+.search-result-card .participant-email {
+  color: #535d72;
+}
+
+.search-result-card .participant-email + .session-card-actions,
+.search-participant-role + .session-card-actions {
+  margin-top: 24px;
+}
+
+.search-feedback-summary {
+  margin: 20px 0;
+}
+
+.search-feedback-summary dt {
+  color: #535d72;
+}
+
+.search-feedback-content {
+  padding: 18px;
+  border-radius: 10px;
+  background: #faf8fd;
+}
+
+.search-empty {
+  margin-top: 24px;
+}
+
+.search-empty p {
+  max-width: 460px;
+  margin: 10px auto 0;
+  color: #535d72;
+}
+
+.search-empty-icon {
+  width: 56px;
+  height: 56px;
+  margin-bottom: 16px;
+  padding: 12px;
+  border-radius: 14px;
+  background: #eee8f8;
+  color: #6441be;
+}
+
+@media (max-width: 800px) {
+  .search-controls {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .search-controls > .form-field:first-child {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 480px) {
+  .search-controls {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .search-section-heading h2 {
+    font-size: 1.125rem;
+  }
+}
