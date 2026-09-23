@@ -9,6 +9,7 @@ import ParticipantDetailsPage from "./pages/ParticipantDetailsPage";
 import SessionParticipantsPage from "./pages/SessionParticipantsPage";
 import CompleteSessionPage from "./pages/CompleteSessionPage";
 import SearchPage from "./pages/SearchPage";
+import ReportsPage from "./pages/ReportsPage";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <NavLink to="/sessions">Sessions</NavLink>
         <NavLink to="/participants">Participants</NavLink>
         <NavLink to="/search">Search</NavLink>
+        <NavLink to="/reports">Reports</NavLink>
       </div>
     </nav>
     <Routes>
@@ -29,6 +31,7 @@ function App() {
       <Route path="/sessions/:id/complete" element={<CompleteSessionPage />} />
       <Route path="/sessions/:id/participants" element={<SessionParticipantsPage />} />
       <Route path="/search" element={<SearchPage />} />
+      <Route path="/reports" element={<ReportsPage />} />
       <Route path="/participants" element={<ParticipantsPage />} />
       <Route path="/participants/new" element={<CreateParticipantPage />} />
       <Route path="/participants/:id" element={<ParticipantDetailsPage />} />

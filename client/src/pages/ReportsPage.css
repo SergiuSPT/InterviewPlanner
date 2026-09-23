@@ -1,0 +1,34 @@
+.report-filters { display: flex; align-items: center; gap: 24px; margin-bottom: 24px; }
+.report-filters .form-field { flex: 1; }
+.report-filters > button { flex-shrink: 0; }
+.report-metrics { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin: 0 0 24px; }
+.report-metric { padding: 22px; border: 1px solid #e3e5ed; border-radius: 14px; background: #fff; }
+.report-metric dt { color: #626b7e; font-size: 0.875rem; }
+.report-metric dd { margin: 8px 0 0; color: #5f389e; font-size: 1.5rem; font-weight: 750; overflow-wrap: anywhere; }
+.report-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+.report-panel { background: #fff; }
+.report-panel > .muted-text { margin-top: 8px; }
+.report-empty { margin-bottom: 24px; }
+.report-placeholder { margin-top: 24px; color: #626b7e; font-size: 0.875rem; }
+.report-bars { display: grid; gap: 20px; padding: 0; margin: 24px 0 16px; list-style: none; }
+.report-bar-label { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 4px 12px; margin-bottom: 8px; font-size: 0.8rem; }
+.report-bar-label span { color: #626b7e; }
+.report-bar-track, .report-bar-total, .report-bar-completed { height: 12px; border-radius: 6px; }
+.report-bar-track { background: #f0edf6; overflow: hidden; }
+.report-bar-total { background: #cdb9ee; }
+.report-bar-completed { background: #7046c5; }
+.report-label { text-transform: capitalize; }
+.report-table-scroll { overflow: auto; max-height: 440px; margin-top: 20px; }
+.report-table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.875rem; }
+.report-table th, .report-table td { padding: 12px 10px; border-bottom: 1px solid #eceef3; vertical-align: top; }
+.report-table thead th { color: #626b7e; font-size: 0.75rem; }
+.report-table tbody th { min-width: 130px; overflow-wrap: anywhere; font-weight: 550; }
+.report-table td { white-space: nowrap; }
+
+@media (max-width: 700px) {
+  .report-grid { grid-template-columns: minmax(0, 1fr); }
+  .report-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .report-filters { align-items: stretch; flex-direction: column; }
+  .report-metric { padding: 16px; }
+  .report-metric dd { font-size: 1.25rem; }
+}
