@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS participants (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     full_name VARCHAR(150) NOT NULL,
     email VARCHAR(255),
-    current_role VARCHAR(150),
+    "current_role" VARCHAR(150),
     experience_level VARCHAR(20)
         CHECK (
             experience_level IS NULL
