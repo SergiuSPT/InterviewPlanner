@@ -5,9 +5,9 @@ reviewing mock technical interviews.
 
 ## Live Application
 
-- Frontend: https://...
-- API health: https://...
-- Repository: https://...
+- Frontend: https://frontend-production-4321.up.railway.app/sessions
+- API health: https://backend-production-e935.up.railway.app/api/health
+- Repository: https://github.com/SergiuSPT/MagnaInterview
 
 ## Features
 
@@ -37,8 +37,7 @@ reviewing mock technical interviews.
 - PostgreSQL
 
 ### Deployment
-- Vercel
-- Render
+- Railway
 - GitHub
 
 ## Local Setup
